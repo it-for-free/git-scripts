@@ -13,6 +13,9 @@ YELLOW='\033[1;33m'
 CYAN='\033[0;35'
 NC='\033[0m'
 
+# TODO: determine the root commit for the current branch automatically.
+# TODO: generate branch name that doesn't conflict with other branches.
+
 CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
 echo -e "${YELLOW}!!! Squash commits ${NC}  for ${CURRENT_BRANCH}"
 
