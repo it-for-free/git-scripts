@@ -16,17 +16,14 @@ NC='\033[0m'
 CURRENT_BRANCH="$(git symbolic-ref --short HEAD)"
 echo -e "${YELLOW}!!! Squash commits ${NC}  for ${CURRENT_BRANCH}"
 
-echo -e "${YELLOW}Fetching master.....${NC}"
-git fetch origin master
-
 echo -e "${YELLOW}Fetching ${NC} current  ${CURRENT_BRANCH}"
 git fetch origin ${CURRENT_BRANCH}
 
 echo -e "${YELLOW}Create master clone ${NC} master-new branch"
-git checkout -B master-new origin/master
+git checkout -B master-new master
 
 echo -e "${YELLOW}Merge ${NC} ${CURRENT_BRANCH} into master-new"
-git merge --squash origin/${CURRENT_BRANCH}
+git merge --squash ${CURRENT_BRANCH}
 git commit -m 'Squash all previous commits'
 
 echo -e "${YELLOW}Push --force! ${NC}  master-new into  ${CURRENT_BRANCH} "
@@ -37,6 +34,9 @@ echo -e "${YELLOW}Returning to ${NC} to ${CURRENT_BRANCH}  (by git reset --hard)
 git checkout ${CURRENT_BRANCH}
 git fetch origin ${CURRENT_BRANCH}
 git reset --hard  origin/${CURRENT_BRANCH}
+
+# Cleanup.
+git branch -D master-new
 
 echo -e "${YELLOW}Ready!${NC} ${CYAN}Show git status ${NC}: "
 git status
